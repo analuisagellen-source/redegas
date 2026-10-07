@@ -21,7 +21,7 @@ function Moldura({ children }) {
 export default function Login() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  const [modo, setModo] = useState('entrar') // entrar | recuperar
+  const [modo, setModo] = useState('entrar') // entrar | recuperar | criar
   const [msg, setMsg] = useState(null)
   const [enviando, setEnviando] = useState(false)
 
@@ -43,24 +43,46 @@ export default function Login() {
       : { tipo: 'ok', texto: 'Se o e-mail estiver cadastrado, você vai receber um link para criar uma nova senha.' })
   }
 
+  // Qualquer pessoa pode criar a conta, mas só entra quem foi convidado:
+  // o papel e o escritório vêm do convite no banco, nunca do navegador.
+  const criarConta = async e => {
+    e.preventDefault()
+    if (senha.length < 8) { setMsg({ tipo: 'erro', texto: 'A senha precisa ter pelo menos 8 caracteres.' }); return }
+    setEnviando(true); setMsg(null)
+    const { data, error } = await supabase.auth.signUp({ email: email.trim(), password: senha,
+      options: { emailRedirectTo: window.location.origin } })
+    setEnviando(false)
+    if (error) { setMsg({ tipo: 'erro', texto: /registered/i.test(error.message) ? 'Este e-mail já tem conta. Use "Entrar".' : error.message }); return }
+    if (!data.session) setMsg({ tipo: 'ok', texto: 'Conta criada! Abra o e-mail que enviamos e clique no link de confirmação para entrar.' })
+  }
+
+  const acao = { entrar, recuperar, criar: criarConta }[modo]
+  const rotulo = { entrar: 'Entrar', recuperar: 'Enviar link de recuperação', criar: 'Criar minha conta' }[modo]
+  const trocar = m => { setModo(m); setMsg(null) }
+
   return (
     <Moldura>
-      <form className="stack-2" onSubmit={modo === 'entrar' ? entrar : recuperar}>
+      <form className="stack-2" onSubmit={acao}>
+        {modo === 'criar' && <div className="t-title">Criar conta</div>}
         <Field label="E-mail">
           <input className="ipt" type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)} required autoFocus />
         </Field>
-        {modo === 'entrar' && (
-          <Field label="Senha">
-            <input className="ipt" type="password" autoComplete="current-password" value={senha} onChange={e => setSenha(e.target.value)} required />
+        {modo !== 'recuperar' && (
+          <Field label={modo === 'criar' ? 'Escolha uma senha (mínimo 8 caracteres)' : 'Senha'}>
+            <input className="ipt" type="password" autoComplete={modo === 'criar' ? 'new-password' : 'current-password'}
+              value={senha} onChange={e => setSenha(e.target.value)} required />
           </Field>
         )}
         {msg && <div className={msg.tipo === 'erro' ? 'card-danger t-caption' : 'card-tint t-caption'}>{msg.texto}</div>}
-        <button className="btn btn-primary" disabled={enviando} type="submit">
-          {enviando ? 'Aguarde…' : modo === 'entrar' ? 'Entrar' : 'Enviar link de recuperação'}
-        </button>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => { setModo(modo === 'entrar' ? 'recuperar' : 'entrar'); setMsg(null) }}>
-          {modo === 'entrar' ? 'Esqueci minha senha' : 'Voltar para o login'}
-        </button>
+        <button className="btn btn-primary" disabled={enviando} type="submit">{enviando ? 'Aguarde…' : rotulo}</button>
+        {modo === 'entrar' ? (
+          <div className="row-between">
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => trocar('criar')}>Criar minha conta</button>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => trocar('recuperar')}>Esqueci minha senha</button>
+          </div>
+        ) : (
+          <button type="button" className="btn btn-ghost btn-sm" onClick={() => trocar('entrar')}>Voltar para o login</button>
+        )}
       </form>
     </Moldura>
   )
