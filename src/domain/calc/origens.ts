@@ -1,0 +1,32 @@
+// Origem normativa de cada regra usada pelo motor. Tudo que o app exibe
+// aponta para uma destas referências (ou para "informado pelo usuário").
+
+export const ORIGEM = {
+  parametrosGas: 'NBR 15526:2012, 6.3; NBR 15358:2020 (corr. 2021), 6.4',
+  potenciaComputada: 'NBR 15526:2012, Anexo D (padrão) / dado do fabricante',
+  potenciaComercial: 'NBR 15358:2020 (corr. 2021), 6.3',
+  fatorSimultaneidade: 'NBR 15526:2012, Anexo E',
+  fatorBloqueioUnidade: 'NBR 15526:2012, B.1 e E.1',
+  fatorComercial: 'NBR 15358:2020 (corr. 2021), 6.3 e 6.4',
+  perdaBaixaGN: 'NBR 15526:2012, B.1.2 a); NBR 15358:2020, A.1.2 a)',
+  perdaBaixaGLP: 'NBR 15526:2012, B.1.2 b); NBR 15358:2020, A.1.2 b)',
+  perdaAlta: 'NBR 15526:2012, B.1.1; NBR 15358:2020, A.1.1',
+  desnivel: 'Especificação RedeGás, 6.7',
+  velocidade: 'Especificação RedeGás, 6.8',
+  limiteAparelhoRes: 'NBR 15526:2012, 6.3 a)',
+  limiteReguladorRes: 'NBR 15526:2012, 6.3 b)',
+  limiteVelocidadeRes: 'NBR 15526:2012, 6.3 c)',
+  limiteAparelhoCom: 'NBR 15358:2020 (corr. 2021), A.1 a)',
+  limiteReguladorCom: 'NBR 15358:2020 (corr. 2021), A.1 b)',
+  limiteVelocidadeCom: 'NBR 15358:2020 (corr. 2021), A.1 c)',
+  pressaoMaxRes: 'NBR 15526:2012, 6.2',
+  pressaoMaxCom: 'NBR 15358:2020 (corr. 2021), 6.1',
+  pressaoUnidade: 'NBR 15526:2012, 6.2',
+  pressaoProjetoCom: 'NBR 15358:2020 (corr. 2021), 6.1',
+  diametroInterno: 'Especificação RedeGás, 6.10 item 4',
+  central: 'Especificação RedeGás, 6.11',
+  vaporizacao: 'Tabela de referência de mercado (Anexo A.2)',
+  estanqueidadeRes: 'NBR 15526:2012, 8.1',
+  estanqueidadeCom: 'NBR 15358:2020 (corr. 2021), 8.2',
+  informado: 'Informado pelo usuário',
+} as const
