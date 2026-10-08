@@ -24,11 +24,11 @@ Dimensionamento de redes internas de gás (GLP e GN). Especificação completa e
 - `src/screens/`: telas. `src/exports/`: memorial.
 - `tests/unit/`: testes automáticos.
 
-Os dados ainda são de demonstração e ficam guardados no navegador. O banco de
-dados (Supabase) entra na próxima entrega.
+Os dados ficam no banco Supabase (projeto `redegas`, região São Paulo). Sem as
+variáveis de ambiente, o app abre em modo demonstração, com dados no navegador.
 
 ## Publicação
 
 - Código: GitHub `analuisagellen-source/redegas` (privado).
-- Site: Vercel, projeto `redegas`. Cada `git push` na branch `main` publica sozinho.
+- Site: https://redegas-kappa.vercel.app (Vercel, projeto `redegas`). Cada `git push` na branch `main` publica sozinho.
 - Variáveis na Vercel (tipo Config): `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
