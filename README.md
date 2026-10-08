@@ -26,3 +26,9 @@ Dimensionamento de redes internas de gás (GLP e GN). Especificação completa e
 
 Os dados ainda são de demonstração e ficam guardados no navegador. O banco de
 dados (Supabase) entra na próxima entrega.
+
+## Publicação
+
+- Código: GitHub `analuisagellen-source/redegas` (privado).
+- Site: Vercel, projeto `redegas`. Cada `git push` na branch `main` publica sozinho.
+- Variáveis na Vercel (tipo Config): `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
